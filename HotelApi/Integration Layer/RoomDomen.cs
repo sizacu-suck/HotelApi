@@ -1,11 +1,12 @@
 ﻿
+using HotelApi.Domen;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 
 namespace HotelApi;
 
-public class RoomDomen 
+public class RoomDomen:IRoomDomen
 {
     private readonly Context context;
 
@@ -61,39 +62,6 @@ public class RoomDomen
 
         return "Комната успешно удалена";
     }
-    public async Task<string> ChangeBusy(int id)
-    {
-        var room = await context.Room.FindAsync(id);
-
-        if (room == null)
-        {
-            return "объект не найден";
-        }
-
-        if (room.busy == true)
-        {
-            return "Комната уже забронирована";
-        }
-        room.busy = true;
-        await context.SaveChangesAsync();
-
-        return "Комната успешно вами забронирована";
-    }
-    public async Task<string> CheckRoom(int id)
-    {
-        var room = await context.Room.FindAsync(id);
-
-        if (room == null)
-        {
-            return "объект не найден";
-        }
-
-        if (room.busy == true)
-        {
-            return "Комната уже забронирована";
-        }
-
-        return "Комната не забронирована";
-    }
+    
 }
 

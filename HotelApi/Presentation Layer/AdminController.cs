@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HotelApi.Domen;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,17 +9,17 @@ namespace HotelApi.controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly RoomDomen roomRepository;
-        public AdminController(RoomDomen _roomRepository)
+        private readonly IRoomDomen roomDomen;
+        public AdminController(IRoomDomen _roomDomen)
         {
-            roomRepository = _roomRepository;
+            roomDomen = _roomDomen;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> GetallRoom()
         {
-            var allRooms = await roomRepository.GetAll();
+            var allRooms = await roomDomen.GetAll();
             if (allRooms == null)
             {
                 return NotFound();
@@ -29,7 +30,7 @@ namespace HotelApi.controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var Room = await roomRepository.Get(id);
+            var Room = await roomDomen.Get(id);
 
             if (Room == null)
             {
@@ -43,14 +44,14 @@ namespace HotelApi.controllers
         
         public async Task<IActionResult> Post([FromBody] RoomClass room)
         {
-            await roomRepository.Post(room);
+            await roomDomen.Post(room);
             return Ok(room);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] RoomClass room)
         {
-            var res = await roomRepository.Put(room);
+            var res = await roomDomen.Put(room);
 
             if (res == "объект не найден")
             {
@@ -61,7 +62,7 @@ namespace HotelApi.controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {  
-            var res = await roomRepository.Delete(id);
+            var res = await roomDomen.Delete(id);
             
             if(res == "объект не найден")
             {

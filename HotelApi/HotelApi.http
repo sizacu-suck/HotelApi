@@ -17,11 +17,6 @@ Content-Type: application/json
 
 ###
 
-@id=0
-GET {{HotelApi_HostAddress}}/api/admin?id=1
-
-###
-
 POST {{HotelApi_HostAddress}}/api/admin
 Content-Type: application/json
 
@@ -37,7 +32,7 @@ GET {{HotelApi_HostAddress}}/api/admin
 
 ###
 
-GET {{HotelApi_HostAddress}}/api/admin/3
+GET {{HotelApi_HostAddress}}/api/admin/6
 
 ###
 
@@ -53,7 +48,7 @@ PUT {{HotelApi_HostAddress}}/api/admin
 Content-Type: application/json
 
 {
-    "id": 2,
+    "id": 6,
     "cost": 800.50,
     "description": "Стандартный одноместный номер",
     "busy": false
@@ -61,15 +56,15 @@ Content-Type: application/json
 
 ###
 
-PATCH {{HotelApi_HostAddress}}/api/client/2
+PATCH {{HotelApi_HostAddress}}/api/client/5
 
 ###
 
-DELETE {{HotelApi_HostAddress}}/api/admin?id=4
+DELETE {{HotelApi_HostAddress}}/api/admin?id=5
 
 ###
 
-PATCH {{HotelApi_HostAddress}}/api/client/2
+PATCH {{HotelApi_HostAddress}}/api/client/5
 
 ###
 
