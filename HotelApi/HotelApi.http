@@ -26,7 +26,9 @@ POST {{HotelApi_HostAddress}}/api/admin
 Content-Type: application/json
 
 {
-  //RoomClass
+  "cost": 2500.00,
+  "description": "Двухместный номер с кондиционером",
+  "busy": false
 }
 
 ###
@@ -43,7 +45,7 @@ PATCH {{HotelApi_HostAddress}}/api/client?id=3
 
 ###
 
-GET {{HotelApi_HostAddress}}/api/client?id=1
+GET {{HotelApi_HostAddress}}/api/client/3
 
 ###
 
@@ -51,10 +53,26 @@ PUT {{HotelApi_HostAddress}}/api/admin
 Content-Type: application/json
 
 {
-"id": 1,
-    "cost": 1200.00,
-    "description": null, 
+    "id": 2,
+    "cost": 800.50,
+    "description": "Стандартный одноместный номер",
     "busy": false
 }
+
+###
+
+PATCH {{HotelApi_HostAddress}}/api/client/2
+
+###
+
+DELETE {{HotelApi_HostAddress}}/api/admin?id=4
+
+###
+
+PATCH {{HotelApi_HostAddress}}/api/client/2
+
+###
+
+GET {{HotelApi_HostAddress}}/api/client/2
 
 ###

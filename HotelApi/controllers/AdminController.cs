@@ -8,31 +8,28 @@ namespace HotelApi.controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly Context dbContext;
-
-        public AdminController(Context _db)
+        private readonly IRoom roomRepository;
+        public AdminController( IRoom _roomRepository)
         {
-            dbContext = _db;
+            roomRepository = _roomRepository;
         }
 
 
         [HttpGet]
         public async Task<IActionResult> GetallRoom()
         {
-            var AllRoom = await dbContext.Room.AsNoTracking().ToListAsync() ;
-
-            if(AllRoom == null)
+            var allRooms = await roomRepository.GetAll();
+            if (allRooms == null)
             {
                 return NotFound();
             }
 
-
-            return Ok(AllRoom);
+            return Ok(allRooms);
         }
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var Room = await dbContext.Room.FindAsync(id);
+            var Room = await roomRepository.Get(id);
 
             if (Room == null)
             {
@@ -46,32 +43,31 @@ namespace HotelApi.controllers
         
         public async Task<IActionResult> Post([FromBody] RoomClass room)
         {
-            dbContext.Room.Add(room);
-
-            await dbContext.SaveChangesAsync();
-            
-
-
-            return Ok();
+            await roomRepository.Post(room);
+            return Ok(room);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] RoomClass room)
         {
-            var newRoom = await dbContext.Room.FindAsync(room.id);
+            var res = await roomRepository.Put(room);
 
-            if(newRoom == null)
+            if (res == "объект не найден")
             {
                 return NotFound();
             }
-
-            newRoom.description = room.description;
-            newRoom.cost = room.cost;
-            newRoom.busy = room.busy;
-
-            await dbContext.SaveChangesAsync();
-
-            return Ok(newRoom);
+            return Ok();
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {  
+            var res = await roomRepository.Delete(id);
+            
+            if(res == "объект не найден")
+            {
+                return NotFound();
+            }
+            return Ok();
         }
 }
 }

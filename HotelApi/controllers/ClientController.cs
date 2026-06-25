@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelApi.controllers
 {
@@ -7,52 +8,36 @@ namespace HotelApi.controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly Context dbContext;
-
-        public ClientController(Context _db)
+        private readonly RoomDomen roomDomen;
+        public ClientController( RoomDomen _roomDomen)
         {
-            dbContext = _db;
+            roomDomen = _roomDomen;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> StatusRoom(int id)
         {
-            var room = await dbContext.Room.FindAsync(id);
+            var room = await roomDomen.CheckRoom(id);
 
-            if (room == null)
+            if (room == "объект не найден")
             {
                 return NotFound();
             }
 
-            if (room.busy == true)
-            {
-                return Ok("Комната занята");
-            }
-
-
-            return Ok("Комната не занята");
+            return Ok(room);
         }
 
         [HttpPatch("{id}")]
         public async Task<IActionResult> TakeRoom(int id)
         {
-            var room = await dbContext.Room.FindAsync(id);
+            var room = await roomDomen.ChangeBusy(id);
 
-            if (room == null)
+            if (room == "объект не найден")
             {
                 return NotFound();
             }
 
-            if (room.busy == true)
-            {
-                return Ok("Комната занята");
-            }
-            
-            room.busy = true;
-            
-            await dbContext.SaveChangesAsync();
-
-            return Ok("Комната забронирована");
+            return Ok(room);
 
         }
 
