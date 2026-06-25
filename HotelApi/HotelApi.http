@@ -1,0 +1,60 @@
+@HotelApi_HostAddress = https://localhost:7275
+
+GET {{HotelApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST https://localhost:7777/api/admin
+Content-Type: application/json
+
+{
+  "id": 1,
+  "cost": 1500.00,
+  "description": "Комната люкс с видом на море",
+  "busy": false
+}
+
+###
+
+@id=0
+GET {{HotelApi_HostAddress}}/api/admin?id=1
+
+###
+
+POST {{HotelApi_HostAddress}}/api/admin
+Content-Type: application/json
+
+{
+  //RoomClass
+}
+
+###
+
+GET {{HotelApi_HostAddress}}/api/admin
+
+###
+
+GET {{HotelApi_HostAddress}}/api/admin/3
+
+###
+
+PATCH {{HotelApi_HostAddress}}/api/client?id=3
+
+###
+
+GET {{HotelApi_HostAddress}}/api/client?id=3
+
+###
+
+PUT {{HotelApi_HostAddress}}/api/admin
+Content-Type: application/json
+
+{
+"id": 1,
+    "cost": 1200.00,
+    "description": null, 
+    "busy": false
+}
+
+###
