@@ -26,14 +26,14 @@ namespace HotelApi.controllers
 
             if (room.busy == true)
             {
-                return BadRequest("Комната занята");
+                return Ok("Комната занята");
             }
 
 
             return Ok("Комната не занята");
         }
 
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> TakeRoom(int id)
         {
             var room = await dbContext.Room.FindAsync(id);
@@ -45,7 +45,7 @@ namespace HotelApi.controllers
 
             if (room.busy == true)
             {
-                return BadRequest("Комната занята");
+                return Ok("Комната занята");
             }
             
             room.busy = true;

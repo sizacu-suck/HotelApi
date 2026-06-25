@@ -43,7 +43,7 @@ PATCH {{HotelApi_HostAddress}}/api/client?id=3
 
 ###
 
-GET {{HotelApi_HostAddress}}/api/client?id=3
+GET {{HotelApi_HostAddress}}/api/client?id=1
 
 ###
 
