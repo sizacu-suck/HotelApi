@@ -10,7 +10,6 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<Context>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddScoped<IRoom, RoomDomen>();
 builder.Services.AddScoped<RoomDomen>();
 var app = builder.Build();
 

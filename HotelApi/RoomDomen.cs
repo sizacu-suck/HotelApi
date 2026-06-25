@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace HotelApi;
 
-public class RoomDomen : IRoom
+public class RoomDomen 
 {
     private readonly Context context;
 

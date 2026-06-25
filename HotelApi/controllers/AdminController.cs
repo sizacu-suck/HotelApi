@@ -8,8 +8,8 @@ namespace HotelApi.controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IRoom roomRepository;
-        public AdminController( IRoom _roomRepository)
+        private readonly RoomDomen roomRepository;
+        public AdminController(RoomDomen _roomRepository)
         {
             roomRepository = _roomRepository;
         }
