@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Query;
 
 namespace HotelApi;
 
-public class RoomDomen:IRoomDomen
+public class Operation:IRoomDomen
 {
     private readonly Context context;
 
-    public RoomDomen(Context _context)
+    public Operation(Context _context)
     {
         this.context = _context;
     }
@@ -22,7 +22,10 @@ public class RoomDomen:IRoomDomen
 
     public async Task<RoomClass?> Get(int id)
     {
-        return await context.Room.FindAsync(id);
+
+        var room = await context.Room.FindAsync(id);
+
+        return room;
     }
 
     public async Task Post(RoomClass room)

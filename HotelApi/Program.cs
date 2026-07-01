@@ -1,6 +1,6 @@
 using HotelApi;
+using HotelApi.Business_Layer;
 using HotelApi.Domen;
-using HotelApi.Process_Logic;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,11 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<Context>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddScoped<IClienDomen, ClientDomen>();
+builder.Services.AddScoped<Iposibilities, Posibilities>();
 
-
-builder.Services.AddScoped<IRoomDomen, RoomDomen>();
-
+builder.Services.AddScoped<IRoomDomen, Operation>();
 
 var app = builder.Build();
 

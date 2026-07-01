@@ -1,5 +1,4 @@
 ﻿using HotelApi.Domen;
-using HotelApi.Process_Logic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

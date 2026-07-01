@@ -1,0 +1,13 @@
+﻿namespace HotelApi.Domen
+{
+    public interface Iposibilities
+    {
+        Task<string> TakeRoom(int id);
+        Task<string> CheckRoom(int id);
+        Task<IEnumerable<RoomClass>> GetAll();
+        Task<string> CreateRoom(RoomClass room);
+        Task<string> PutRoom(RoomClass room);
+        Task<string> DeleteRoom(int id);
+
+    }
+}
