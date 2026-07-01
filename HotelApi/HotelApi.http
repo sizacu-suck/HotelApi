@@ -71,3 +71,12 @@ PATCH {{HotelApi_HostAddress}}/api/client/5
 GET {{HotelApi_HostAddress}}/api/client/2
 
 ###
+
+@id=0
+DELETE {{HotelApi_HostAddress}}/api/admin?id={{id}}
+
+###
+
+PATCH {{HotelApi_HostAddress}}/api/client/{{id}}
+
+###

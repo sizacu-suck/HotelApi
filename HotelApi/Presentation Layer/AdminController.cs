@@ -9,8 +9,8 @@ namespace HotelApi.controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        private readonly IRoomDomen roomDomen;
-        public AdminController(IRoomDomen _roomDomen)
+        private readonly Iposibilities roomDomen;
+        public AdminController(Iposibilities _roomDomen)
         {
             roomDomen = _roomDomen;
         }
@@ -30,7 +30,7 @@ namespace HotelApi.controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var Room = await roomDomen.Get(id);
+            var Room = await roomDomen.GetRoom(id);
 
             if (Room == null)
             {
@@ -44,27 +44,40 @@ namespace HotelApi.controllers
         
         public async Task<IActionResult> Post([FromBody] RoomClass room)
         {
-            await roomDomen.Post(room);
+            var res = await roomDomen.CreateRoom(room);
+
+            if (res == "У комнаты не можеть быть отрицательная цена") 
+            {
+                return BadRequest();
+            }
+
             return Ok(room);
         }
 
         [HttpPut]
         public async Task<IActionResult> Put([FromBody] RoomClass room)
         {
-            var res = await roomDomen.Put(room);
+            var res = await roomDomen.PutRoom(room);
 
             if (res == "объект не найден")
             {
                 return NotFound();
+            }
+            if (res == "У комнаты не можеть быть отрицательная цена")
+            {
+                return BadRequest();
             }
             return Ok();
         }
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {  
-            var res = await roomDomen.Delete(id);
-            
-            if(res == "объект не найден")
+            var res = await roomDomen.DeleteRoom(id);
+            if(res == "Для удаления комната должна быть пустой")
+            {
+                return BadRequest();
+            }
+            if (res == "объект не найден")
             {
                 return NotFound();
             }

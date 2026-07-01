@@ -8,6 +8,7 @@
         Task<string> CreateRoom(RoomClass room);
         Task<string> PutRoom(RoomClass room);
         Task<string> DeleteRoom(int id);
+        public Task<RoomClass?> GetRoom(int id);
 
     }
 }

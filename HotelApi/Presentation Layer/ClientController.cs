@@ -9,8 +9,8 @@ namespace HotelApi.controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly IClienDomen clientDomen;
-        public ClientController(IClienDomen _clientDomen)
+        private readonly Iposibilities clientDomen;
+        public ClientController(Iposibilities _clientDomen)
         {
             clientDomen = _clientDomen;
         }
@@ -31,7 +31,7 @@ namespace HotelApi.controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> TakeRoom(int id)
         {
-            var room = await clientDomen.ChangeBusy(id);
+            var room = await clientDomen.TakeRoom(id);
 
             if (room == "объект не найден")
             {

@@ -4,7 +4,7 @@ namespace HotelApi.Business_Layer
 {
     public class Posibilities : Iposibilities
     {
-        private readonly IRoomDomen _roomRepository; // Зависим только от интерфейса репозитория
+        private readonly IRoomDomen _roomRepository; 
 
         public Posibilities(IRoomDomen roomRepository)
         {
@@ -32,7 +32,7 @@ namespace HotelApi.Business_Layer
         {
             if (room.cost <= 0)
             {
-                return "У комнаты не можеть быть отрицательныя цена";
+                return "У комнаты не можеть быть отрицательная цена";
             }
             await _roomRepository.Post(room);
             return "Комната успешно создана";
@@ -59,6 +59,11 @@ namespace HotelApi.Business_Layer
         public async Task<IEnumerable<RoomClass>> GetAll()
         {
             return await _roomRepository.GetAll();
+        }
+
+        public async Task<RoomClass?> GetRoom(int id)
+        {
+            return await _roomRepository.Get(id);
         }
 
         public async Task<string> PutRoom(RoomClass room)
