@@ -1,7 +1,6 @@
-﻿using HotelApi.Domen;
+using HotelApi.Domen;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HotelApi.controllers
 {
@@ -9,8 +8,9 @@ namespace HotelApi.controllers
     [ApiController]
     public class ClientController : ControllerBase
     {
-        private readonly Iposibilities clientDomen;
-        public ClientController(Iposibilities _clientDomen)
+        private readonly IPosibilities clientDomen;
+
+        public ClientController(IPosibilities _clientDomen)
         {
             clientDomen = _clientDomen;
         }
@@ -20,7 +20,7 @@ namespace HotelApi.controllers
         {
             var room = await clientDomen.CheckRoom(id);
 
-            if (room == "объект не найден")
+            if (room == "Комната не найдена")
             {
                 return NotFound();
             }
@@ -31,17 +31,19 @@ namespace HotelApi.controllers
         [HttpPatch("{id}")]
         public async Task<IActionResult> TakeRoom(int id)
         {
+
             var room = await clientDomen.TakeRoom(id);
 
-            if (room == "объект не найден")
+            if (room == "Комната не найдена")
             {
                 return NotFound();
             }
-
+            if (room == "Комната уже забронирована")
+            {
+                return BadRequest(room);
+            }
             return Ok(room);
 
         }
-
-
     }
 }

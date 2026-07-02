@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<Context>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddScoped<Iposibilities, Posibilities>();
+builder.Services.AddScoped<IPosibilities, Posibilities>();
 
 builder.Services.AddScoped<IRoomDomen, Operation>();
 

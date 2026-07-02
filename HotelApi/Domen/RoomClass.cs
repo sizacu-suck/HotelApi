@@ -1,5 +1,3 @@
-﻿using Microsoft.EntityFrameworkCore;
-
 namespace HotelApi
 {
     public class RoomClass

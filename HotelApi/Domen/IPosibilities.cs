@@ -1,6 +1,6 @@
 ﻿namespace HotelApi.Domen
 {
-    public interface Iposibilities
+    public interface IPosibilities
     {
         Task<string> TakeRoom(int id);
         Task<string> CheckRoom(int id);

@@ -1,15 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-
 namespace HotelApi.Domen
 {
     public interface IRoomDomen
     {
-        public  Task<IEnumerable<RoomClass>> GetAll();
-
-        public  Task<RoomClass?> Get(int id);
-
-        public  Task Post(RoomClass room);
-        public  Task<string> Put(RoomClass room);
-        public  Task<string> Delete(int id);
+        Task<IEnumerable<RoomClass>> GetAll();
+        Task<RoomClass?> Get(int id);
+        Task AddAsync(RoomClass room);
+        Task<string> UpdateAsync(RoomClass room);
+        Task<string> DeleteAsync(int id);
     }
 }

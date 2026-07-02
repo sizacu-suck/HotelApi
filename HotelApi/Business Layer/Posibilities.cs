@@ -1,8 +1,8 @@
-﻿using HotelApi.Domen;
+using HotelApi.Domen;
 
 namespace HotelApi.Business_Layer
 {
-    public class Posibilities : Iposibilities
+    public class Posibilities : IPosibilities
     {
         private readonly IRoomDomen _roomRepository; 
 
@@ -17,7 +17,7 @@ namespace HotelApi.Business_Layer
 
             if (room == null)
             {
-                return "объект не найден";
+                return  "Комната не найдена";
             }
 
             if (room.busy == true)
@@ -32,11 +32,11 @@ namespace HotelApi.Business_Layer
         {
             if (room.cost <= 0)
             {
-                return "У комнаты не можеть быть отрицательная цена";
+                return "У комнаты не может быть отрицательная цена";
             }
-            await _roomRepository.Post(room);
+            
+            await _roomRepository.AddAsync(room);
             return "Комната успешно создана";
-
         }
 
         public async Task<string> DeleteRoom(int id)
@@ -45,15 +45,16 @@ namespace HotelApi.Business_Layer
 
             if (room == null)
             {
-                return "объект не найден";
+                return ("Комната не найдена");
             }
+            
             if (room.busy == true)
             {
-                return "Для удаления комната должна быть пустой";
+                 return("Для удаления комната должна быть пустой");
             }
 
-            return await _roomRepository.Delete(id);
-        
+            await _roomRepository.DeleteAsync(id);
+            return "Комната успешно удалена";
         }
 
         public async Task<IEnumerable<RoomClass>> GetAll()
@@ -63,17 +64,25 @@ namespace HotelApi.Business_Layer
 
         public async Task<RoomClass?> GetRoom(int id)
         {
-            return await _roomRepository.Get(id);
+            var room = await _roomRepository.Get(id);
+            
+            if (room == null)
+            {
+                return null;
+            }
+            
+            return room;
         }
 
         public async Task<string> PutRoom(RoomClass room)
         {
             if (room.cost <= 0)
             {
-                return "У комнаты не может быть отрицательныя цена";
+                return ("У комнаты не может быть отрицательная цена");
             }
-            await _roomRepository.Put(room);
-            return "Комната успешно создана";
+            
+            await _roomRepository.UpdateAsync(room);
+            return "Комната успешно изменена";
         }
 
         public async Task<string> TakeRoom(int id)
@@ -82,15 +91,16 @@ namespace HotelApi.Business_Layer
 
             if (room == null)
             {
-                return "объект не найден";
+                return ($"Комната не найдена");
             }
 
             if (room.busy == true)
             {
-                return "Комната уже забронирована";
+                return ("Комната уже забронирована");
             }
+            
             room.busy = true;
-            await _roomRepository.Put(room);
+            await _roomRepository.UpdateAsync(room);
 
             return "Комната успешно вами забронирована";
         }

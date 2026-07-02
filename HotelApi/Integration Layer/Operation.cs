@@ -1,12 +1,9 @@
-﻿
 using HotelApi.Domen;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
 
 namespace HotelApi;
 
-public class Operation:IRoomDomen
+public class Operation : IRoomDomen
 {
     private readonly Context context;
 
@@ -22,49 +19,41 @@ public class Operation:IRoomDomen
 
     public async Task<RoomClass?> Get(int id)
     {
-
-        var room = await context.Room.FindAsync(id);
-
-        return room;
+        return await context.Room.FindAsync(id);
     }
 
-    public async Task Post(RoomClass room)
+    public async Task AddAsync(RoomClass room)
     {
         await context.Room.AddAsync(room);
         await context.SaveChangesAsync();
     }
 
-    public async Task<string> Put(RoomClass room)
+    public async Task<string> UpdateAsync(RoomClass room)
     {
-        var newRoom = await context.Room.FindAsync(room.id);
-        if (newRoom == null)
+        var existingRoom = await context.Room.FindAsync(room.id);
+        if (existingRoom == null)
         {
-            return "объект не найден";
+            return ($"Комната не найдена");
         }
-        newRoom.description = room.description;
-        newRoom.cost = room.cost;
-        newRoom.busy = room.busy;
+
+        existingRoom.description = room.description;
+        existingRoom.cost = room.cost;
+        existingRoom.busy = room.busy;
 
         await context.SaveChangesAsync();
-
-        return "Комната успешно изменена";
-
+        return ("Успешно");
     }
-    public async Task<string> Delete(int id)
+
+    public async Task<string> DeleteAsync(int id)
     {
         var room = await context.Room.FindAsync(id);
-
         if (room == null)
         {
-            return "объект не найден";
+            return ("Комната не найдена");
         }
 
         context.Room.Remove(room);
-
         await context.SaveChangesAsync();
-
-        return "Комната успешно удалена";
+        return ("Успешно");
     }
-    
 }
-
